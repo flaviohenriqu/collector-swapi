@@ -1,0 +1,16 @@
+{% extends "swapi/base.html" %}
+{% block content %}
+    <b>Collection UID: </b> {{ collection.uid }}<br />
+    <b>File Name: </b> {{ collection.file.name }}<br />
+    <b>Created: </b> {{ collection.created_at }}<br />
+    <ul class="nav nav-pills mt-5">
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'swapi:list' collection.uid %}">List CSV</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'swapi:value' collection.uid %}">Value Count</a>
+        </li>
+    </ul>
+    {% block list_content %}
+    {% endblock list_content %}
+{% endblock content %}

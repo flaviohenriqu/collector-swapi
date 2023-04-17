@@ -1,0 +1,26 @@
+{% extends "swapi/list_base.html" %}
+{% block list_content %}
+  <form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Submit">
+  </form>
+  <table class="table">
+    <thead>
+        <tr>
+            {% for header in headers %}
+                <th scope="col">{{ header }}</th>
+            {% endfor %}
+        </tr>
+        </thead>
+        <tbody id="csv-data">
+          {% for row in rows %}
+            <tr>
+              {% for entry in row %}
+                <td>{{ entry }}</td>
+              {% endfor %}
+            </tr>
+          {% endfor %}
+    </tbody>
+  </table>
+{% endblock list_content %}

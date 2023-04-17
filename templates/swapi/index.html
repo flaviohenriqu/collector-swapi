@@ -1,0 +1,20 @@
+{% extends "swapi/base.html" %}
+
+{% block content %}
+  <div class="row">
+    <div class="col-md-4">
+      <h3>Collections</h3>
+    </div>
+    <div class="col-md-8">
+      <a class="btn btn-primary ml-auto" role="button" href="/fetch">Fetch</a>
+    </div>
+  </div>
+  {% if not collections %}
+    <h4> No collections yet - Click Fetch buttton to fetch first collection </h4>
+  {% endif %}
+  <ul class="list-group">
+    {% for col in collections %}
+        <li class="list-group-item"><a href="/list/{{col.uid}}/">{{ col.created_at }}</a></li>
+    {% endfor %}
+  </ul>
+{% endblock content %}

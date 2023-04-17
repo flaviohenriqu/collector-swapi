@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "adverity"
+version = "0.1.0"
+description = "adverity challenge"
+authors = ["Flavio Santos"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+Django = "^4.2"
+petl = "^1.7.12"
+requests = "^2.28.2"
+asyncio = "^3.4.3"
+aiohttp = "^3.8.4"
+python-dateutil = "^2.8.2"
+black = "^23.3.0"
+isort = "^5.12.0"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.3.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

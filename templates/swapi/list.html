@@ -1,0 +1,67 @@
+{% extends "swapi/list_base.html" %}
+{% block list_content %}
+    <table class="table">
+        <thead>
+        <tr>
+            {% for header in headers %}
+                <th scope="col">{{ header }}</th>
+            {% endfor %}
+        </tr>
+        </thead>
+        <tbody id="csv-data">
+          {% for row in rows %}
+            <tr>
+              {% for entry in row %}
+                <td>{{ entry }}</td>
+              {% endfor %}
+            </tr>
+          {% endfor %}
+        </tbody>
+    </table>
+
+    {% if has_more %}
+        <div class="text-center">
+            <button id="load-more-btn" class="btn btn-primary">Load more</button>
+        </div>
+    {% endif %}
+
+    <script>
+    // Initialize the current page number and the has_more flag
+    let currentPage = 1;
+    let hasMore = {{ has_more|lower }};
+
+    // Function to load more data when the Load more button is clicked
+    function loadMoreData() {
+        currentPage++;
+        $.ajax({
+        url: "{% url 'swapi:list' collection.uid %}?page=" + currentPage,
+        success: function(response) {
+          let tr;
+          for (var i in response.rows) {
+            let row = response.rows[i];
+            let td;
+            for (var j in row) {
+              let entry = row[j];
+              td += `<td>${entry}</td>`;
+            }
+            tr += `<tr>${td}</tr>`;
+          }
+          let data = `<tbody id="csv-data">${tr}</tbody>`;
+          $("#csv-data").replaceWith(data);
+          hasMore = response.has_more;
+          if (hasMore) {
+            $("#load-more-btn").show();
+          } else {
+            $("#load-more-btn").hide();
+          }
+        }
+        });
+    }
+
+    $("#load-more-btn").click(loadMoreData);
+
+    if (!hasMore) {
+        $("#load-more-btn").hide();
+    }
+    </script>
+{% endblock list_content %}
